@@ -1,5 +1,4 @@
 import { getRequest, postRequest } from './requestrs.js';
-import { postView } from './postView.js';
 import { homeViewGetPost,homeViewPostPost } from './views.js';
 
 const section = document.getElementById('homeView');
@@ -9,7 +8,14 @@ section.getElementsByClassName('topic-title')[0].addEventListener('click', check
 
 const urlPost = '/jsonstore/collections/myboard/posts';
 
-export async function homeViewSection() {
+let ctx = null;
+
+export function homeViewSection(inCtx) {
+    ctx = inCtx;
+    waitView()
+}
+
+async function waitView() {
     homeViewGetPost(await getRequest(urlPost));
     document.querySelector('main').replaceChildren(section);
 }
@@ -30,13 +36,14 @@ function formEdit(ev) {
     return formData
 }
 
-export function checkTypeEv(ev) {
+
+function checkTypeEv(ev) {
     ev.preventDefault()
 
     if(ev.target.parentElement.tagName === 'A') {
         const elId = ev.target.parentElement.parentElement.getAttribute('id');
-
-        postView(elId);
+        ctx.goTo('postView')
+        ctx.render(elId);
         section.remove()
     };
 }

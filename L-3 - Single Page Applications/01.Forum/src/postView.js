@@ -9,13 +9,19 @@ const urlPost = '/jsonstore/collections/myboard/posts/';
 const urlComment = `/jsonstore/collections/myboard/comments`;
 let idFromRequest;
 
-export async function postView(url) {
+let ctx = null;
+
+export function postView(inCtx, url) {
+    ctx = inCtx;
+    document.querySelector('main').replaceChildren(sectionPost);
+}
+
+export async function view(url) {
     idFromRequest = url;
     const urlId = urlPost + url
     postViewTitle(await getRequest(urlId));
     postViewComment(await getRequest(urlId));
     postViewUserComments(await getRequest(urlComment));
-    document.querySelector('main').replaceChildren(sectionPost);
 }
 
 async function onFormData(ev) {
