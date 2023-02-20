@@ -10,12 +10,10 @@ async function request(method, url, data) {
         option.headers['Content-Type'] = 'application/json';
         option.body = JSON.stringify(data);
     }
-    
     const userData = JSON.parse(sessionStorage.getItem('userData'));
     if(userData !== null) {
-        option.headers['X-Autorization'] = userData.accessToken;
+        option.headers['X-Authorization'] = userData.accessToken;
     }
-
     try {
         const respost = await fetch(host + url, option);
 
