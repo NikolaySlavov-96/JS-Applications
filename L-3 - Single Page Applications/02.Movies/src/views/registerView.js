@@ -14,7 +14,6 @@ export function showRegister(inCtx) {
 }
 
 async function onSubmit(dataIn) {
-    console.log(dataIn)
     if(dataIn.email == '' || dataIn.password == '' || dataIn.password.length < 6 ) {
         alert('email or password is not field correct');
         return

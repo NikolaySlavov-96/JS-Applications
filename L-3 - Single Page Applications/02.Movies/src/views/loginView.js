@@ -27,6 +27,6 @@ async function onSubmit(dataIn) {
     }
 
     sessionStorage.setItem('userData', JSON.stringify(userData));
-    ctx.goTo('homeView');
     ctx.checkUserNav()
+    ctx.goTo('homeView');
 }

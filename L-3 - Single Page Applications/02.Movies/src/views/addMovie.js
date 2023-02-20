@@ -17,7 +17,7 @@ async function onSubmit(dataIn) {
         alert('all field is required');
         return
     }
-    const dataResponse = await postRequest(endPoints.movieGetCreate, dataIn);
+    const dataResponse = await postRequest(endPoints.movieRequest, dataIn);
     ctx.goTo('homeView');
     formData.reset();
 }

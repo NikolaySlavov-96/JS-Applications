@@ -1,13 +1,13 @@
 import * as api from './api.js';
 import { showHome } from './views/homeView.js';
 import { showAddMovie } from './views/addMovie.js';
-import {} from './views/editMovie.js';
+import { showEdit } from './views/editMovie.js';
 import { showLogin } from './views/loginView.js';
 import { showRegister } from './views/registerView.js';
-import {} from './views/movieExample.js';
-import { checkUserNav } from './untils.js';
+import { showMovie } from './views/movieExample.js';
+import { checkUserNav, editViewFielt } from './untils.js';
 import { logoutPanel } from './views/logout.js';
-import { renderDom } from './dom.js';
+import { renderDom, addMovieToDom, movieDetails } from './dom.js';
 
 document.querySelector('nav').addEventListener('click', onNavigation)
 
@@ -17,6 +17,8 @@ const sections = {
     'registerView': showRegister,
     'logoutView': logoutPanel,
     'addMovieView': showAddMovie,
+    'movie-example': showMovie,
+    'editView': showEdit,
 }
 
 goTo('homeView');
@@ -39,6 +41,9 @@ function goTo(viewName) {
             goTo,
             checkUserNav,
             renderDom,
+            addMovieToDom,
+            movieDetails,
+            editViewFielt
         })
         return true;
     }

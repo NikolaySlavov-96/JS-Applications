@@ -29,7 +29,7 @@ async function request(method, url, data) {
 
     } catch(err) {
         alert(err.message);
-        throw err.message;
+        throw err;
     }
 }
 
