@@ -3,13 +3,16 @@ export const endPoints = {
     'login': '/users/login',
     'logout': '/users/logout',
     'movieRequest': '/data/movies',
-    'getLikes': '/data/likes?where=movieId%3D%22{movieId}%22&distinct=_ownerId&count',
-    'getLikeUser': '/data/likes?where=movieId%3D%22{movieId}%22%20and%20_ownerId%3D%22{userId}%22',
     'addRevokeLike': '/data/likes',
 }
 
-export function checkUserNav() {
+export function checkSessionStorage() {
     const userData = JSON.parse(sessionStorage.getItem('userData'));
+    return userData
+}
+
+export function checkUserNav() {
+    const userData = checkSessionStorage()
 
     if(userData !== null) {
         document.getElementById('welcome-msg').textContent = `Welcome, ${userData.email}`
@@ -33,7 +36,7 @@ export function createSubmitHandler(form, callback) {
 }
 
 export function checkUserType(idUser) {
-    const userData = JSON.parse(sessionStorage.getItem('userData'));
+    const userData = checkSessionStorage();
     if(idUser !== userData.id) {
         return false;
     }
@@ -46,4 +49,9 @@ export function editViewFielt(idMovie) {
     inputField[0].value = idMovie.title;
     inputField[1].textContent = idMovie.description;
     inputField[2].value = idMovie.img;
+}
+
+export function checkLikeBtn(id) {
+    const userData = checkSessionStorage()
+    // if()
 }

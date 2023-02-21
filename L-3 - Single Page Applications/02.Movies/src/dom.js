@@ -1,4 +1,4 @@
-import { checkUserType } from './untils.js';
+import { checkUserType, checkLikeBtn } from './untils.js';
 
 export function renderDom(section) {
     document.getElementById('currentView').replaceChildren(section);
@@ -13,71 +13,49 @@ export function addMovieToDom(data) {
     movieList.replaceChildren(fragment);
 }
 
-export function movieDetails(id) {
+export function movieDetails(id, like) {
     const users = checkUserType(id._ownerId);
     const divL = document.createElement('div');
     divL.classList.add('container');
-    const divRow = document.createElement('div');
-    divRow.classList.add('row');
-    divRow.classList.add('bg-light');
-    divRow.classList.add('text-dark');
-    divRow.innerHTML = `
+    divL.innerHTML = `
+    <div class="row bg-light text-dark">
     <h1>Movie title: ${id.title}</h1>
+
     <div class="col-md-8">
       <img
         class="img-thumbnail"
         src="${id.img}"
         alt="Movie"
       />
-    </div>`
-
+    </div>
+    <div class="col-md-4 text-center">
+      <h3 class="my-3">Movie Description</h3>
+      <p>
+      ${id.description}
+      </p>
+      
+    </div>
+  </div>`
+    const otherBtn = divL.querySelector('.text-center');
     if(users == true) {
-        const div = document.createElement('div');
-        div.id = id._id;
-        div.classList.add('col-md-4')
-        div.classList.add('text-center')
-        div.innerHTML = `
-        <h3 class="my-3">Movie Description</h3>
-        <p>
-            ${id.description}
-        </p>
-        <a class="btn btn-danger" href="#">Delete</a>
-        <a class="btn btn-warning" href="#">Edit</a>
-        `
-        divRow.appendChild(div);
-    } else {
-      const div = document.createElement('div');
-        div.id = id._id;
-        div.classList.add('col-md-4')
-        div.classList.add('text-center')
-        div.innerHTML = `
-        <h3 class="my-3">Movie Description</h3>
-        <p>
-            ${id.description}
-        </p>`
-      if(true) {
-        const btn = document.createElement('a');
-        btn.id = 'likeBtn';
-        btn.classList.add('btn')
-        btn.classList.add('btn-primary')
-        btn.href ="#";
-        btn.textContent = 'Like'
-        div.appendChild(btn);
+        otherBtn.appendChild(createBtnA('a', 'btn', 'btn-danger', 'Delete'))
+        otherBtn.appendChild(createBtnA('a', 'btn', 'btn-warning', 'Edit'))
       } else {
-        div.appendChild(spanBtn());
+        if(like) {
+          otherBtn.appendChild(spanBtn(like));
+        } else {
+          otherBtn.appendChild(createBtnA('a', 'btn', 'btn-primary', 'Like'))
       }
-      divRow.appendChild(div);
     }
 
-    divL.appendChild(divRow);
     document.getElementById('movie-example').replaceChildren(divL);
 }
 
-function spanBtn() {
+function spanBtn(like) {
   const span = document.createElement('span');
         span.id = 'viewLikes';
         span.classList.add('enrolled-span');
-        span.textContent = 'Liked 1';
+        span.textContent = `Liked ${like}`;
     return span;
 }
 
@@ -91,4 +69,13 @@ function createEl(data) {
     ancar.textContent = 'Movie'
     div.appendChild(ancar)
     return div
+}
+
+function createBtnA(type, classN, classN2, content) {
+  const a = document.createElement(type);
+  a.classList.add(classN);
+  a.classList.add(classN2);
+  a.href = '#';
+  a.textContent = content;
+  return a
 }

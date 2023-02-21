@@ -33,7 +33,7 @@ function onNavigation(ev) {
     }
 }
 
-function goTo(viewName) {
+function goTo(viewName, dataMovie) {
     const screen = sections[viewName];
 
     if(typeof screen == 'function') {
@@ -44,7 +44,7 @@ function goTo(viewName) {
             addMovieToDom,
             movieDetails,
             editViewFielt
-        })
+        }, dataMovie)
         return true;
     }
     return false;
