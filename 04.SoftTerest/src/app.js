@@ -1,20 +1,27 @@
-import {} from './view/shareView.js';
+import { createSection } from './view/createView.js';
 import { registerSection } from './view/registerView.js';
-import {} from './view/loginView.js';
+import { loginSection } from './view/loginView.js';
 import { homeSection } from './view/homeView.js';
-import {} from './view/detailsView.js';
-import {} from './view/dashbord.js';
+import { detailSection } from './view/detailsView.js';
+import { dashbordSection } from './view/dashbord.js';
 import { renderDom, checkUserNav } from './until.js';
-import {} from './api.js';
+import { getRequest } from './api.js';
+import { endPoints } from './config.js';
+import { createDom } from './domCreate.js';
 
 document.querySelector('nav').addEventListener('click', onNavigation);
 
 const views = {
     '/': homeSection,
     '/register': registerSection,
+    '/login': loginSection,
+    '/dashbord': dashbordSection,
+    '/create': createSection,
+    '/detailView': detailSection,
+    '/logout': sessionLogout,
 }
 
-goTo('homeView');
+goTo('/');
 checkUserNav(); //work;
 
 function onNavigation(ev) {
@@ -38,9 +45,16 @@ function goTo(viewSection) {
             goTo,
             renderDom,
             checkUserNav,
+            createDom,
         });
         return true;
     }
     return false;
 }
 
+function sessionLogout() {
+    getRequest(endPoints.logout);
+    sessionStorage.removeItem('userData');
+    checkUserNav();
+    goTo('/')
+}
