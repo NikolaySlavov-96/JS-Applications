@@ -38,7 +38,7 @@ function onNavigation(ev) {
     }
 }
 
-function goTo(viewSection) {
+function goTo(viewSection, dataFil) {
     const view = views[viewSection];
     if(typeof view == 'function') {
         view({
@@ -46,7 +46,7 @@ function goTo(viewSection) {
             renderDom,
             checkUserNav,
             createDom,
-        });
+        }, dataFil);
         return true;
     }
     return false;

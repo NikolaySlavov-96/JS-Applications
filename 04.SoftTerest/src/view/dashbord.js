@@ -28,7 +28,7 @@ async function checkView() {
 function onDetails(ev) {
     ev.preventDefault();
     if(ev.target.tagName == 'A') {
-        ctx.goTo('/detailView');
-        //logic view date
+        const dataFil = ev.target.id
+        ctx.goTo('/detailView', dataFil);
     }
 }

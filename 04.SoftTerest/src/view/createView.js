@@ -14,13 +14,21 @@ export function createSection(inCtx) {
 }
 
 async function onSubmit(dataIn) {
-    console.log(dataIn);
     if(dataIn.title.length < 6 || dataIn.description.length < 10 || dataIn.imageURL.length < 5) {
         alert('input field is not input correct');
         return;
     }
-    await postRequest(endPoints.ideaCreate, dataIn);
-
-    ctx.goTo('/');
+    const requestData = {
+        title: dataIn.title,
+        description: dataIn.description,
+        img: dataIn.imageURL
+    }
+    await postRequest(endPoints.ideaCreate, requestData);
+    
     formData.reset();
+    ctx.goTo('/dashbord');
 }
+
+
+//Object { title: "fwqrqwr", description: "wqrqwrwqrqwrqw", imageURL: "wqrwqrwqrwrq" }
+//Object { _id: "247efaa7-8a3e-48a7-813f-b5bfdad0f46c", title: "4 Eady DIY Idea To Try!", img: "./images/brightideacropped.jpg" }

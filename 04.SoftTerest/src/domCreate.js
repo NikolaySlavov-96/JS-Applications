@@ -2,6 +2,7 @@ export function createDom() {
     return {
         createDashbord,
         createEmptyDashbord,
+        createButton,
     }
 }
 
@@ -54,4 +55,17 @@ function createElemHTML(type, classN, content) {
     }
 
     return el;
+}
+
+function createButton() {
+    const buttonDiv = document.createElement('div');
+    buttonDiv.classList.add('text-center');
+    const a = document.createElement('a');
+    a.classList.add('btn');
+    a.classList.add('detb');
+    a.href = "";
+    a.textContent = 'Delete';
+    buttonDiv.appendChild(a);
+
+    return buttonDiv;
 }
