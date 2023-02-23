@@ -27,11 +27,14 @@ function createCatLi(cat) {
 
 function onClick(e) {
     e.preventDefault();
-    const parent = e.target.parentElement;
+    const target = e.target;
+    const parent = target.parentElement;
     const currentTarget = parent.querySelector('div');
     if(currentTarget.style.display == 'none') {
-        currentTarget.style.display = 'block'
+        currentTarget.style.display = 'block';
+        target.textContent = 'Hide status code';
     } else {
-        currentTarget.style.display = 'none'
+        currentTarget.style.display = 'none';
+        target.textContent = 'Show status code';
     }
 }
