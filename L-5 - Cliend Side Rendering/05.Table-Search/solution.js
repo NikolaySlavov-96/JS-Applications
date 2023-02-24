@@ -14,8 +14,7 @@ async function renderTr(match) {
 }
 
 function onClick() {
-   const valueFromUser = dataFromUser.value;
-   console.log(valueFromUser);
+   const valueFromUser = dataFromUser.value.toLowerCase();
    renderTr(valueFromUser);
    setTimeout(() => renderTr(), 1000);
    dataFromUser.value = '';
