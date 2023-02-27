@@ -33,8 +33,8 @@ export function loginTemplate(ctx) {
         if(email == '' || password == '') {
             return alert('incorrect field');
         }
-        await login(email, password)
-        ctx.page.redirect('/create')
+        const data = await login(email, password);
+        ctx.page.redirect('/');
     }
     
 }

@@ -8,7 +8,7 @@ export const navTemplate = (hasUser) => html`
     <div id="user">
         <a id="createLink" href="/create">Create Furniture</a>
         <a id="profileLink" href="/my-furniture">My Publications</a>
-        <a id="logoutBtn" href="javascript:void(0)">Logout</a>
+        <a id="logoutBtn" href="/logout">Logout</a>
     </div>
     `: html`
     <div id="guest">
@@ -16,5 +16,4 @@ export const navTemplate = (hasUser) => html`
         <a id="registerLink" href="/register">Register</a>
     </div>
     `}
-</nav>
-`;
+</nav>`;

@@ -13,22 +13,24 @@ const dashbordView = (data) => html`
     ${repeat(data, el => el._id, productCards)}
 </div>`;
 
-const productCards = (el) => html`
-<div class="col-md-4">
-    <div class="card text-white bg-primary">
-        <div class="card-body">
-            <img src="/images/table.png" />
-            <p>Description here</p>
-            <footer>
-                <p>Price: <span>${el.price} $</span></p>
-            </footer>
-            <div>
-                <a href=${el._id} class="btn btn-info">Details</a>
+function productCards(el) {
+    return html`
+    <div class="col-md-4">
+        <div class="card text-white bg-primary">
+            <div class="card-body">
+                <img src="${el.img}" />
+                <p>Description here</p>
+                <footer>
+                    <p>Price: <span>${el.price} $</span></p>
+                </footer>
+                <div>
+                    <a href="/details/${el._id}" class="btn btn-info">Details</a>
+                </div>
             </div>
         </div>
     </div>
-</div>
-`;
+    `;
+} 
 
 export async function dashbordTemplate(ctx) {
     const data = await getAllFurniture()

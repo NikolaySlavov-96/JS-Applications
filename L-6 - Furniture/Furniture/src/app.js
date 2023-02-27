@@ -9,6 +9,9 @@ import { registerTemplate } from './views/register.js';
 import { createTemplate } from './views/create.js'
 import { dashbordTemplate } from './views/dashbord.js';
 import { detailTemplate } from './views/datails.js';
+import { myFurnitureTemplate } from './views/myFurniture.js';
+import { editTemplate } from './views/edit.js';
+import { logout } from './views/logout.js';
 
 const header = document.querySelector('header');
 const container = document.querySelector('.container');
@@ -19,10 +22,13 @@ page(addUserNav(navTemplate));
 
 page('/index.html', '/');
 page('/', dashbordTemplate)
+page('/details/:id', detailTemplate);
 page('/create', createTemplate);
-page('/:id', detailTemplate);
-// page('/my-furniture',);
+page('/edit/:id', editTemplate);
+page('/my-furniture', myFurnitureTemplate);
 page('/login', loginTemplate);
 page('/register', registerTemplate);
+page('/logout', logout);
 
 page.start();
+

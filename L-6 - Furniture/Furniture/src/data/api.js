@@ -1,4 +1,5 @@
 const host = 'http://localhost:3030/';
+import { getUserData } from '../until.js';
 
 async function request(method, url, data) {
     const options = {
@@ -10,10 +11,10 @@ async function request(method, url, data) {
         options.headers['Content-Type'] = 'application/json';
         options.body = JSON.stringify(data);
     }
-
-    // if(userData) {
-    //     // options.headers['X-Authorization'] = // accessToken;
-    // }
+    const user = getUserData();
+    if(user) {
+        options.headers['X-Authorization'] = user.accessToken;
+    }
 
     try {
         const response = await fetch(host + url, options);
@@ -24,8 +25,8 @@ async function request(method, url, data) {
 
         const dataResp = await response.json();
 
-        if(dataResp.ok == false) {
-            throw new Error(dataResp); //.message
+        if(response.ok == false) {
+            throw new Error(dataResp.message); //.message
         }
 
         return dataResp;

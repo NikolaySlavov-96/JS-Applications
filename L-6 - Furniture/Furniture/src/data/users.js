@@ -13,9 +13,10 @@ export async function register(email, password) {
     const userData = {
         id: data._id,
         email: data.email,
+        accessToken: data.accessToken
     }
-    
-    setUserData(userData)
+    setUserData(userData);
+    return data
 }
 
 export async function login(email, password) {
@@ -23,10 +24,12 @@ export async function login(email, password) {
     const userData = {
         id: data._id,
         email: data.email,
+        accessToken: data.accessToken
     }
     setUserData(userData)
+    return data;
 }
 
 export function logout() {
-    return api.getRequest(endPoints.logout); // userId
+    return api.getRequest(endPoints.logout);
 }

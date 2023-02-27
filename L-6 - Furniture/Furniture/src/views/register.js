@@ -42,7 +42,7 @@ export function registerTemplate(ctx) {
         if(password !== rePass) {
             return alert('password not equals')
         }
-        await register(email, password)
-        ctx.page.redirect('/create')
+        const data = await register(email, password);
+        ctx.page.redirect('/');
     }
 }
