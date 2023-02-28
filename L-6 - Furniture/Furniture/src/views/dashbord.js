@@ -19,7 +19,7 @@ function productCards(el) {
         <div class="card text-white bg-primary">
             <div class="card-body">
                 <img src="${el.img}" />
-                <p>Description here</p>
+                <p>${el.description}</p>
                 <footer>
                     <p>Price: <span>${el.price} $</span></p>
                 </footer>
