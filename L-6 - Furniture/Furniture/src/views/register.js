@@ -42,6 +42,7 @@ export function registerTemplate(ctx) {
         if(password !== rePass) {
             return alert('password not equals')
         }
+        console.log(email,password)
         const data = await register(email, password);
         ctx.page.redirect('/');
     }
