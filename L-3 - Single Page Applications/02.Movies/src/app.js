@@ -1,4 +1,3 @@
-import * as api from './api.js';
 import { showHome } from './views/homeView.js';
 import { showAddMovie } from './views/addMovie.js';
 import { showEdit } from './views/editMovie.js';
@@ -7,6 +6,7 @@ import { showRegister } from './views/registerView.js';
 import { showMovie } from './views/movieExample.js';
 import { checkUserNav, editViewFielt } from './untils.js';
 import { logoutPanel } from './views/logout.js';
+
 import { renderDom, addMovieToDom, movieDetails } from './dom.js';
 
 document.querySelector('nav').addEventListener('click', onNavigation)

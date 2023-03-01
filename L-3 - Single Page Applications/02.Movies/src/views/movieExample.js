@@ -12,17 +12,18 @@ export function showMovie(inCtx, inMovieId) {
     ctx.renderDom(section);
     
     if(typeof inMovieId == 'object') {
+        console.log(inMovieId);
         ctx.movieDetails(inMovieId);
         idMovie = inMovieId;
     } else {
         idMovie = inMovieId;
+        document.getElementById('movie-example').addEventListener('click', onBtn);
+        showDataMovie()
     }
 
-    document.getElementById('movie-example').addEventListener('click', onBtn);
-    movieDetailt()
 }
 
-async function movieDetailt() {
+async function showDataMovie() {
     const data = await getRequest(endPoints.movieRequest + '/' + idMovie);
     let like = await likeTrue()
     if(like.length !== 0) {
@@ -36,8 +37,10 @@ async function movieDetailt() {
 
 async function likeTrue() {
     const user = checkSessionStorage();
-    const like = getRequest(`/data/likes?where=movieId%3D%22${idMovie}%22%20and%20_ownerId%3D%22${user.id}%22`);
-    return like
+    if(user !== null) {
+        const like = getRequest(`/data/likes?where=movieId%3D%22${idMovie}%22%20and%20_ownerId%3D%22${user.id}%22`);
+        return like
+    }
 }
 
 async function likeConunter() {

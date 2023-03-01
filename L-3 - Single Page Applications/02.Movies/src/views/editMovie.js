@@ -20,6 +20,8 @@ export function showEdit(inCtx, inIdMovie) {
 
 async function onSubmit(dataIn) {
     const data = await putRequest(endPoints.movieRequest + '/' + idMovie, dataIn);
+
+    //textarea is not a clear afer reset
     formData.reset();
     ctx.goTo('movie-example', data);
 }

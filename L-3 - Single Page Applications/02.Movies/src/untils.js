@@ -37,7 +37,7 @@ export function createSubmitHandler(form, callback) {
 
 export function checkUserType(idUser) {
     const userData = checkSessionStorage();
-    if(idUser !== userData.id) {
+    if(idUser !== userData?.id) {
         return false;
     }
     return true;

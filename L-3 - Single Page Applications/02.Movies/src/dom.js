@@ -37,45 +37,54 @@ export function movieDetails(id, like) {
     </div>
   </div>`
     const otherBtn = divL.querySelector('.text-center');
-    if(users == true) {
+    if (users == true) {
         otherBtn.appendChild(createBtnA('a', 'btn', 'btn-danger', 'Delete'))
         otherBtn.appendChild(createBtnA('a', 'btn', 'btn-warning', 'Edit'))
-      } else {
-        if(like) {
-          otherBtn.appendChild(spanBtn(like));
+    } else {
+        if (like) {
+            otherBtn.appendChild(spanBtn(like));
         } else {
-          otherBtn.appendChild(createBtnA('a', 'btn', 'btn-primary', 'Like'))
-      }
+            otherBtn.appendChild(createBtnA('a', 'btn', 'btn-primary', 'Like'))
+        }
     }
 
     document.getElementById('movie-example').replaceChildren(divL);
 }
 
 function spanBtn(like) {
-  const span = document.createElement('span');
-        span.id = 'viewLikes';
-        span.classList.add('enrolled-span');
-        span.textContent = `Liked ${like}`;
+    const span = document.createElement('span');
+    span.id = 'viewLikes';
+    span.classList.add('enrolled-span');
+    span.textContent = `Liked ${like}`;
     return span;
 }
 
 function createEl(data) {
-    //Object { _ownerId: "847ec027-f659-4086-8032-5173e2f9c93a", title: "Black Widow", description: "Natasha Romanoff aka Black Widow confronts the darker parts of her ledger when a dangerous conspiracy with ties to her past arises. Comes on the screens 2020.", img: "https://miro.medium.com/max/735/1*akkAa2CcbKqHsvqVusF3-w.jpeg", _createdOn: 1614935055353, _id: "1240549d-f0e0-497e-ab99-eb8f703713d7" }
     const div = document.createElement('div');
-    div.textContent = data.title;
-    div.id = data._id;
-    const ancar = document.createElement('a');
-    ancar.href ="#";
-    ancar.textContent = 'Movie'
-    div.appendChild(ancar)
+    div.classList.add('card')
+    div.classList.add('mb-4')
+    div.innerHTML = `<img class="card-img-top" src="${data.img}" alt="Card image cap" width="400">
+  <div class="card-body">
+  <h4 class-"card-title"="">${data.title}</h4>
+  </div> 
+  <div class="card-footer">
+  <a href="#">
+  <button id="${data._id}" type-"button"="" class="bt btn-info">Details</button> 
+  </a></div>`
+    // div.textContent = data.title;
+    // div.id = data._id;
+    // const ancar = document.createElement('a');
+    // ancar.href ="#";
+    // ancar.textContent = 'Movie'
+    // div.appendChild(ancar)
     return div
 }
 
 function createBtnA(type, classN, classN2, content) {
-  const a = document.createElement(type);
-  a.classList.add(classN);
-  a.classList.add(classN2);
-  a.href = '#';
-  a.textContent = content;
-  return a
+    const a = document.createElement(type);
+    a.classList.add(classN);
+    a.classList.add(classN2);
+    a.href = '#';
+    a.textContent = content;
+    return a
 }

@@ -25,9 +25,8 @@ function addMovie(ev) {
 
 async function onMovie(ev) {
     ev.preventDefault()
-    if(ev.target.tagName == 'A') {
-        //curent situation .. dont work after import html structure
-        const idMovie = ev.target.parentElement.id
+    if(ev.target.parentElement.tagName == 'A') {
+        const idMovie = ev.target.id
         ctx.goTo('movie-example', idMovie);
     }
 }
