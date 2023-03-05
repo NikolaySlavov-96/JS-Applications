@@ -3,7 +3,7 @@ import { repeat } from "../../node_modules/lit-html/directives/repeat.js";
 import { searchEngine } from "../data/search.js";
 import { submitHandler } from "../until.js";
 
-const cardResult = (content) => html`
+const cardResult = (content, user) => html`
 <li class="card">
     <img src="${content.imageUrl}" alt="travis" />
     <p>
@@ -13,7 +13,8 @@ const cardResult = (content) => html`
         <strong>Model: </strong><span class="model">${content.model}</span>
     </p>
     <p><strong>Value:</strong><span class="value">${content.value}</span>$</p>
-    <a class="details-btn" href="/dashboard/${content._id}">Details</a>
+    ${user ? html`
+    <a class="details-btn" href="/dashboard/${content._id}">Details</a>` : nothing};
 </li>`
 
 const resultTemplate = (hasResult, data) => html`
@@ -21,7 +22,7 @@ const resultTemplate = (hasResult, data) => html`
     ${hasResult ? html`
     <ul class="card-wrapper">
         <!-- Display a li with information about every post (if any)-->
-        ${repeat(data, d => d._id, cardResult)}
+        ${data.map(el => cardResult(el, data.user))}
     </ul>
     ` :
      html`<h2>There are no results found.</h2>`}
@@ -56,6 +57,11 @@ export function searchView(ctx) {
             hasResult = true;
         }
         const user = ctx.user;
+        if(user) {
+            resultSeach.user = true;
+        } else {
+            resultSeach.user = false;
+        }
 
         ctx.renderSection(searchTemplate(hasInput, submitHandler(onSubmit), hasResult, resultSeach));
     }
