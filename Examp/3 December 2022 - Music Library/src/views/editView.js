@@ -23,7 +23,6 @@ const editTemplate = (onSubmit, data) => html`
 export async function editView(ctx) {
     const albumId = ctx.params.id
     const data = await getAlbum(albumId);
-    console.log(data)
     ctx.render(editTemplate(submitHangler(onSubmit), data));
 
     async function onSubmit({ singer, album, imageUrl, release, label, sales }) {
