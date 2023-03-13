@@ -24,7 +24,7 @@ page('/', homeView);
 page('/catalog', catalogView);
 page('/catalog/:id', detailView);
 page('/create', createView);
-page('/edit', editView);
+page('/edit/:id', editView);
 page('/register', registerlView);
 page('/login', loginView);
 page('/logout', logoutFunction)

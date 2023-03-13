@@ -1,5 +1,5 @@
 import * as api from './api.js';
-import { setSession } from '../utility/utility.js';
+import { setSession, removeSession } from '../utility/utility.js';
 
 const endpoints = {
     'login': '/users/login',
@@ -32,5 +32,7 @@ export async function register(email, password) {
 }
 
 export async function logout() {
-    return await api.getRequest(endpoints.logout);
+    const dataLogout = await api.getRequest(endpoints.logout);
+    removeSession();
+    return dataLogout;
 }

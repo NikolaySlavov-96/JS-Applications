@@ -1,9 +1,40 @@
-import { getGame } from '../api/games.js';
-import { html } from '../lib.js';
+import { html, nothing, repeat } from '../lib.js';
+import { addComment, deleteGame, getAllComents, getGame } from '../api/games.js';
+import { submitHandler } from '../utility/utility.js';
 
-const btnTemplate = () => html``
+const cardComment = (content) => html`
+<li class="comment">
+    <p>Content: ${content.comment}</p>
+</li>`;
 
-const detailTemplate = (content, setting) => html`
+const commentTemplate = (setting, comments) => html`
+<div class="details-comments">
+    <h2>Comments:</h2>
+    ${setting.isComments ? 
+        html`
+    <ul>
+        ${repeat(comments, i => i._id, cardComment)}
+    </ul>` : 
+    html`<p class="no-comment">No comments.</p>`}
+</div>`;
+
+const btnTemplate = (content, onDelete) => html`
+<div class="buttons">
+    <a href="/edit/${content._id}" class="button">Edit</a>
+    <a @click=${onDelete} href="#" class="button">Delete</a>
+</div>`
+
+const formAddCommentTemplate = (createComment) => html`
+    <article class="create-comment">
+        <label>Add new comment:</label>
+        <form @submit=${createComment} class="form">
+            <textarea name="comment" placeholder="Comment......"></textarea>
+            <input class="btn submit" type="submit" value="Add Comment">
+        </form>
+    </article>
+`
+
+const detailTemplate = (content, setting, onDelete, allCommentsForGame, createComment) => html`
 <section id="game-details">
     <h1>Game Details</h1>
     <div class="info-section">
@@ -17,56 +48,53 @@ const detailTemplate = (content, setting) => html`
 
         <p class="text">${content.summary}</p>
 
+        ${commentTemplate(setting, allCommentsForGame)}
 
-        <!-- Bonus ( for Guests and Users ) -->
-        <div class="details-comments">
-            <h2>Comments:</h2>
-            <ul>
-                <!-- list all comments for current game (If any) -->
-                <li class="comment">
-                    <p>Content: I rate this one quite highly.</p>
-                </li>
-                <li class="comment">
-                    <p>Content: The best game.</p>
-                </li>
-            </ul>
-            <!-- Display paragraph: If there are no games in the database -->
-            <p class="no-comment">No comments.</p>
-        </div>
-
-        <!-- Edit/Delete buttons ( Only for creator of this game )  -->
-        <div class="buttons">
-            <a href="#" class="button">Edit</a>
-            <a href="#" class="button">Delete</a>
-        </div>
+        ${setting.isOwner ? btnTemplate(content, onDelete) : nothing};
     </div>
 
-    <!-- Bonus -->
-    <!-- Add Comment ( Only for logged-in users, which is not creators of the current game ) -->
-    <article class="create-comment">
-        <label>Add new comment:</label>
-        <form class="form">
-            <textarea name="comment" placeholder="Comment......"></textarea>
-            <input class="btn submit" type="submit" value="Add Comment">
-        </form>
-    </article>
+    ${!setting.isOwner && setting.isLogin ? formAddCommentTemplate(createComment) : nothing};
 
 </section>`;
 
 export async function detailView(ctx) {
     const idGame = ctx.params.id;
     const dataGame = await getGame(idGame);
+    const allCommentsForGame = await getAllComents(idGame);
+
     const menuSetting = {
         isOwner: false,
         isLogin: false,
+        isComments: true,
     }
+
+    if(allCommentsForGame.length == 0) {
+        menuSetting.isComments = false;
+    }
+
     const userData = ctx.user;
-    if(userData !== undefined) {
+    if (userData !== undefined) {
         menuSetting.isLogin = true;
-        if(userData.id == dataGame._ownerId) {
+        if (userData.id == dataGame._ownerId) {
             menuSetting.isOwner = true;
         }
     }
 
-    ctx.renderMain(detailTemplate(dataGame, menuSetting));
+    ctx.renderMain(detailTemplate(dataGame, menuSetting, onDelete,allCommentsForGame, submitHandler(createComment)));
+
+    async function onDelete(ev) {
+        ev.preventDefault();
+        await deleteGame(idGame);
+        ctx.page.redirect('/');
+    }
+
+    async function createComment({comment}) {
+        const dataSend = {
+            gameId: idGame,
+            comment,
+        }
+
+        await addComment(dataSend);
+        ctx.page.redirect('/catalog/' + idGame)
+    }
 }
