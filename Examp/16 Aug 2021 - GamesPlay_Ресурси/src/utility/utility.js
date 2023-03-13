@@ -17,6 +17,6 @@ export function submitHandler(callback) {
         const user = new FormData(ev.target);
         const userData = Object.fromEntries([...user]);
 
-        callback(userData, ev.targer);
+        callback(userData, ev.target);
     }
 }

@@ -88,13 +88,18 @@ export async function detailView(ctx) {
         ctx.page.redirect('/');
     }
 
-    async function createComment({comment}) {
+    async function createComment({comment}, events) {
         const dataSend = {
             gameId: idGame,
             comment,
         }
+        
+        if(comment == '') {
+            return alert('all fields is required')
+        }
 
         await addComment(dataSend);
+        events.reset();
         ctx.page.redirect('/catalog/' + idGame)
     }
 }
